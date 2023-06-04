@@ -1,0 +1,38 @@
+def solution(n, k):
+    return checkPos(n,convertToBin(n),k)
+    
+def convertToBin(n):
+'''
+first I change the number from decimal to binary and then remove the: "ob"
+'''
+    binNumb = bin(n)
+    binNumb = binNumb[2:]
+    return binNumb
+
+def checkPos(n,binary,k):
+'''
+the I traverse in reverse ordeer the string representation of the binary to check if there is a 0 on the k position and if so just return the number
+in case there is a 1 I call a different function to change that digito to 0
+'''
+    if n != 0:
+        for pos, item in enumerate(reversed(binary), start = 1):
+            if pos == k and item =="0":
+                return n
+            elif pos == k:
+                return changeToCero(binary,k)
+    else:
+        return 0
+
+def changeToCero(binary,k):
+'''
+ I create a new string in order to have the prefix for binary numbers and then add the remaining charecters from the string, except for the position where I want to
+ go from 1 to 0 and then change the resulting string back to an int and have it returned
+'''
+    newBinary = "0b"
+    pos = len(binary) - k + 1
+    for count, item in enumerate(binary, start =1):
+        if count == pos:
+            newBinary = newBinary + "0"
+        else:
+            newBinary = newBinary + item
+    return int(newBinary,2)
